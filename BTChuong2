@@ -39,6 +39,7 @@ plot(M_playBill)
 #Nhap data
 dataPath <- ('D:/0-CaoHoc/HP1/Statistics/BT/Tuyen-tinh-don')
 indicators <- read.table(file.path(dataPath,'indicators.txt'), header = TRUE)
+plot(LoanPaymentsOverdue, PriceChange, xlab = 'Percentage change in average price', ylab = 'Percentage of overdue  mortgage loans',data = indicator) 
 
 #Xay dung mo hinh tuyen tinh
 Model_ind <- lm(PriceChange ~ LoanPaymentsOverdue, data = indicators)
