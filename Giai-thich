@@ -1,0 +1,68 @@
+Câu 1:
+Xây dựng mô hình hồi quy tuyến tính trên R ta có được mô hình như sau:
+CurrentWeek = 6804.886 + 0.9820815*LastWeek + e
+
+  a. Khoảng tin cậy 95% (tương đương mức ý nghĩa alpha 5%) cho hệ số góc Beta1 là: (0.9514971 ; 1.0126658) 
+1 có vẻ là 1 giá trị hợp lý của Beta1 vì 1 thuộc khoảng tin cậy (0.9514971 ; 1.0126658) với mức ý nghĩa alpha 5%
+  b. * Đặt giả thuyết kiểm định H0: Beta0 = 10000
+                                H1: Beta0 != 10000
+     * Kiểm định giả thuyết bằng phương pháp t-Student
+      T = (Beta1^ - Beta1)/se(Beta1^) = (6804.886 - 10000)/9929.318 = -0.3217858
+     * Xác định Miền bác bỏ:
+      Giá trị thống kê: |T| = 0.3217858
+      Giá trị tới hạn phân phối Student, với khoảng tin cậy 95% tức là alpha = 1 - 95% = 5%: t(n-2,1-alpha/2) = t(16,0.025) = 2.119905
+      Ta có: |T| < t(n-2,1-alpha/2) => Không đủ cơ sở để bác bỏ giả thuyết Beta0 = 10000 với mức ý nghĩa alpha 5%
+  c. Với mô hình trên R ta khoảng dự đoán 95% cho kết quả phòng vé có doanh thu $400,000 tuần trước là từ 359832.8 đến 439442.2
+  $450,000 nằm khá xa bên ngoài khoảng dự đoán nên dường như không là 1 dự đoán khả thi
+  d. Dựa vào biểu đồ từ mô hình hồi quy tuyến tính đơn của dữ liệu:
+  Việc dự đoán rằng doanh thu tuần này và tuần trước bằng nhau là hợp lý
+  Tuy nhiên ở biểu đồ quan hệ Sai số và Độ lệch chuẩn đối với Giá trị fit có 2 quan sát có sai số khá lớn
+  
+Câu 2:
+Xây dựng mô hình hồi quy tuyến tính trên R ta có được mô hình như sau:
+PriceChange = 4.5145 - 2.2485*LoanPaymentsOverdue + e
+    a. Khoảng tin cậy 95% của hệ số góc Beta1 (-4.1634543; -0.3335853)
+    Khoảng tin cậy của Beta1 âm là lý do để ta tin vào xu hướng giảm của giá nhà ở giai đoạn 2006 2007
+    b. Khoảng tin cậy 95% cho Mức độ thay đổi giá trung bình với điều kiện 4% khoản vay thế chấp quá hạn từ 30 ngày trở lên trong quý gần nhất:
+    -6.648849% đến -2.310322%
+    tức là giảm từ -2.310322% đến -6.648849%
+    
+    4% khoản vay thế chấp quá hạn từ 30 ngày trở lên trong quý gần nhất thì việc giữ giá là không thể bởi khoảng tin cậy cho mức độ thay đổi ít nhất là 2.3%
+    
+    
+Câu 3:
+Từ  mô hình hồi quy tuyến tính đã xây dựng ta có:
+  - ước lượng Beta0 0.6417099 với sai số chuẩn của Beta0 0.6417099
+  - ước lượng Beta1 0.0112916 với sai số chuẩn của Beta1 0.0008184
+  
+  - Độ lệch chuẩn phần dư: 0.3298 với 28 bậc tự do
+  => số quan sát là 28+2=30
+  
+  a. Giới hạn khoảng thời gian khởi động cho việc xử lý hóa đơn là khoảng tin cậy 95% cho Beta0
+  Sử dụng công thức:
+  .
+  .
+  .
+  => 0.3912497h đến 0.8921701 <=> 23,5 phút đến 53,5 phút
+  
+  b. * Đặt giả thuyết kiểm định H0: Beta1 = 0.01
+                                H1: Beta1 != 0.01
+     * Kiểm định giả thuyết bằng phương pháp t-Student
+      T = (Beta1^ - Beta1)/se(Beta1^) = (0.0112916 - 0.01)/0.0008184 = 1.578201
+     * Xác định Miền bác bỏ:
+      Giá trị thống kê: |T| = 1.578201
+      Giá trị tới hạn phân phối Student, với khoảng tin cậy 95% tức là alpha = 1 - 95% = 5%: t(n-2,1-alpha/2) = t(28,0.025) = 2.048407
+      Ta có: |T| < t(n-2,1-alpha/2) => Không đủ cơ sở để bác bỏ giả thuyết Beta1 = 0.01 với mức ý nghĩa alpha 5%
+      Không thể bác bỏ ý kiến thời gian xử lý trung bình cho 1 hóa đơn thêm là 0.6 phút được, tạm chấp nhận ý kiến này
+  c.  invoices = 130
+      Time = 0.6417099 + 0.0112916 * invoices
+      
+      Dựa vào công thức: chú ý mean(Invoices) == invoices
+      .
+      .
+      .
+      Khoảng dự đoán thời gian thực tế xử lý 130 hóa đơn là: từ 2.79635 đến 1.422886 <=> 1h37' đến 2h48' 
+      
+      
+      
+      
