@@ -35,19 +35,24 @@ plot(M_playBill)
 #################################################
 ######################CAU 2######################
 #################################################
-dataPath <- ('D:/0-CaoHoc/HP1/Statistics/BT/Tuyen-tinh-don/1_2_3_SimonSheather')
 
-indicator <- read.table(file.path(dataPath,'indicator.txt'), header = TRUE)
-dim(indicator)
+#Nhap data
+dataPath <- ('D:/0-CaoHoc/HP1/Statistics/BT/Tuyen-tinh-don')
+indicators <- read.table(file.path(dataPath,'indicators.txt'), header = TRUE)
 
-ind_fit1 <- lm(PriceChange ~ LoanPaymentsOverdue, data = indicator)
-summary(ind_fit1)
+#Xay dung mo hinh tuyen tinh
+Model_ind <- lm(PriceChange ~ LoanPaymentsOverdue, data = indicators)
+summary(Model_ind)
 
 ######Cau a
-confint(ind_fit1, level = 0.95)[2,]
+confint(Model_ind, level = 0.95)[2,] #Khoang tin cay 95% cho Beta1
+#     2.5 %     97.5 % 
+#-4.1634543 -0.3335853 
 
 ######Cau b
-predict(ind_fit1, data.frame(LoanPaymentsOverdue = 4), interval = "confidence")
+predict(Model_ind, data.frame(LoanPaymentsOverdue = 4), interval = "confidence") khoang tin cay 5% cua trung binh E(Y|X=4)
+#        fit       lwr       upr
+#  -4.479585 -6.648849 -2.310322
 
 #################################################
 ######################CAU 3######################
