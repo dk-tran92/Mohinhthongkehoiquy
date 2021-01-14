@@ -53,6 +53,7 @@ predict(ind_fit1, data.frame(LoanPaymentsOverdue = 4), interval = "confidence")
 ######################CAU 3######################
 #################################################
 dataPath <- ('E:/z_Study/CH/HP1/Thongke/TaiLieu-MsNgoc/BT/Data')
+
 Inv_Data <- read.table(file.path(dataPath,'invoices.txt'), header = TRUE)
 
 Inv_Model <- lm(Time ~ Invoices, data = Inv_Data)
@@ -76,12 +77,13 @@ n <- 30
 conf_int <- 95
 alpha <- 1-conf_int/100
 
-######Cau a
+##     CAU A     ##
 delta_beta0 <- qt(1-alpha/2, df = n-2)*se_Beta0
-Beta0_confint_95 <- c(Beta0 - delta_beta0, Beta0 + delta_beta0)
+Beta0_confint_95 <- c(est_Beta0 - delta_beta0, est_Beta0 + delta_beta0)
 Beta0_confint_95
 
-######Cau b
+
+##     CAU B     ##
 H0_Beta1 <- 0.01 #null hypothesis H0
 
 T_obs <- (est_Beta1 - H0_Beta1)/se_Beta1 #Gia tri thong ke
@@ -89,16 +91,14 @@ T_obs <- (est_Beta1 - H0_Beta1)/se_Beta1 #Gia tri thong ke
 isFail_H0 <- abs(T_obs) > qt(1-alpha/2, n - 2) #Kiem dinh
 isFail_H0
 
-######Cau c
-invoice <- 130
-Time <- est_Beta0 + est_Beta1 * invoice
+##     CAU C     ##
+invoices <- 130
+Time <- est_Beta0 + est_Beta1 * invoices
 SXX <- 0
 for (x in Inv_Data$Invoices){
   SXX <- SXX + (x - mean_Invoices)^2
 }
-delta_Time <- qt(1-alpha/2, n - 2) * s * sqrt(1 + 1 / n + (invoice - mean_Invoices)^2/SXX)
-
-# invoice - mean_Invoices = 0
+delta_Time <- qt(1-alpha/2, n - 2) * s * sqrt(1 + 1 / n + (invoices - mean_Invoices)^2/SXX)
 
 #Result
 fit <- Time
@@ -106,5 +106,5 @@ upr <- Time + delta_Time
 lwr <- Time - delta_Time
 
 Time
-upr
 lwr
+upr
