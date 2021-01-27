@@ -41,6 +41,6 @@ Ta nhập dữ liệu của 12 mẫu thử nghiệm trên R như sau:
 	
 	6. Khoảng tin cậy 95% cho Beta1 cho mô hình hồi quy đơn mô tả sự phụ thuộc tuyến tính giữa
 	mức độ bền dẻo của nhựa độ dày vật liệu
-	từ 3.19 đến 8.89 khá xa giá trị 0
-	=> Hồi quy tuyến tính là có ý nghĩa.
+	từ 3.19 đến 8.89 khá xa giá trị 0. Điều này giúp ta bác bỏ giả thuyết Beta1 = 0
+	=>  Mô hình hồi quy tuyến tính là có ý nghĩa.
 	
