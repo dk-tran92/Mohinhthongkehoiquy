@@ -37,7 +37,7 @@ SSR <- anova(model3)[1,2] + anova(model3)[2,2]
 F_obs <- (SSR/2)/(SSE/9) #Gia tri thong ke
 F_obs
 
-isFail_H0 <- F_obs > qf(0.05, 2, 9)
+isFail_H0 <- F_obs > qf(1-0.05, 2, 9)
 isFail_H0
 #True. => Bac bo H0
 
