@@ -1,0 +1,29 @@
+#Tieu luan
+#Data2
+#install MASS and plm
+
+setwd('E:/z_Study/CH/HP1/Thongke/Tieu-luan/data')
+
+housePrice <- read.csv('data2.csv', header = TRUE)
+attach(housePrice)
+
+drophousePrice <- subset( housePrice, select = -c(id, date ) )
+detect.lindep(drophousePrice)
+
+
+fullModel = lm(price~bedrooms+bathrooms+sqft_living+sqft_lot+floors+waterfront
+               +view+condition+grade+sqft_above+sqft_basement+yr_built
+               +yr_renovated+zipcode+lat+long+sqft_living15+sqft_lot15)
+
+
+baseModel = lm(price~1)
+
+step(baseModel,scope=list(upper=fullModel,lower=~1),direction="forward")
+
+#AIC
+AICModel <- lm(formula = price ~ sqft_living + lat + view + grade + yr_built + 
+     waterfront + bedrooms + bathrooms + zipcode + long + condition + 
+     sqft_above + sqft_living15 + yr_renovated + sqft_lot15 + 
+     sqft_lot + floors)
+summary(AICModel)
+summary(fullModel)
