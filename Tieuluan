@@ -1,6 +1,7 @@
 #Tieu luan
 #Data2
 #install MASS and plm
+#install.packages("plm")
 
 setwd('E:/z_Study/CH/HP1/Thongke/Tieu-luan/data')
 
