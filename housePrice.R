@@ -83,3 +83,34 @@ AICModel_drop_floors <- lm(formula = price ~ sqft_living + lat + view + grade + 
                  sqft_above + sqft_living15 + yr_renovated + sqft_lot15 + 
                  sqft_lot)
 summary(AICModel_drop_floors)
+
+
+
+##################################################
+
+#http://www.sthda.com/english/articles/37-model-selection-essentials-in-r/154-stepwise-regression-essentials-in-r/
+
+setwd('E:/z_Study/CH/HP1/Thongke/Tieu-luan/data')
+
+housePrice <- read.csv('data2.csv', header = TRUE)
+dim(housePrice)
+#So quan trac 21597 lon hon nhieu so voi so bien 21, kha nang full model co the fit rat cao
+#Ta lua chon phuonng phap Backward selection
+
+
+install.packages("tidyverse")
+install.packages("caret")
+install.packages("leaps")
+
+library(tidyverse)
+library(caret)
+library(leaps)
+
+library(MASS)
+# Fit the full model 
+full.model <- lm(price ~., data = swiss)
+# Stepwise regression model
+step.model <- stepAIC(full.model, direction = "both", 
+                      trace = FALSE)
+summary(step.model)
+
