@@ -3,6 +3,11 @@
 #http://www.sthda.com/english/articles/11-machine-learning/
 #http://www.sthda.com/english/articles/39-regression-model-diagnostics/161-linear-regression-assumptions-and-diagnostics-in-r-essentials/#regression-diagnostics-reg-diag
 
+
+#https://www.ics.uci.edu/~jutts/st108/Model_Selection_in_R.doc
+
+
+
 #install MASS and plm
 #install.packages("plm")
 
