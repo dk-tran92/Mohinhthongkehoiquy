@@ -1,134 +1,96 @@
 #Tieu luan
 #Data2
-#https://bookdown.org/egarpor/PM-UC3M/lm-ii-diagnostics.html#lm-ii-diagnostics-1
+#install MASS and plm
+#install.packages("plm")
+install.packages("ggplot2")
 
-
-
-
-#VIF close to  
-#1 : absence of multicollinearity.
-#VIF larger than  5   or  10  : problematic amount of multicollinearity. Advised to remove the predictor with largest VIF.
-
-
-
-
-
-#*********DATA        http://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set
-https://www.kaggle.com/hellbuoy/car-price-prediction/tasks?taskId=1707
-
-
-https://www.kaggle.com/arujitdas/car-price-prediction
-
-
-
-
-
-
-
+#Nhap du lieu
 setwd('K:/0-Caohoc/HP1/Thongke/Tieu-luan/data')
 housePrice <- read.csv('data2.csv', header = TRUE)
+
+#Tong quan
 summary(housePrice)
 dim(housePrice)
 housePrice[1:5,]
 
+#######################
+#Tien xu ly du lieu
 housePrice.prepro <- subset( housePrice, select = -id)
 
+#Chuyen thoi gian tu ky tu qua so
 housePrice.prepro[,'date'] <- as.Date(housePrice.prepro[,'date'], format = "%m/%d/%Y")
 housePrice.prepro[,'date'] <- as.numeric(housePrice.prepro[,'date'])
 housePrice.prepro[1:5,'date']
 
-
 attach(housePrice.prepro)
-
-
 pairs(price~., data = housePrice.prepro)
 
+#Log transfom cho bien price
+par(mfrow=c(1,2))
+hist(housePrice.prepro$price)
+hist(log(housePrice.prepro$price))
 
 attach(housePrice.prepro)
 housePrice.prepro[["price"]] <- log(price)
 colnames(housePrice.prepro)[colnames(housePrice.prepro) == "price"] <- "log.price"
 
-
+#Tuong quan giua cac bien
 round(cor(housePrice.prepro), 2)
-corrplot::corrplot(cor(housePrice.prepro), addCoef.col = "grey")
+corrplot::corrplot(cor(housePrice.prepro), addCoef.col = "grey", number.cex=0.7)
 
-#BIC both
-interModel <-lm(log.price ~ date + bedrooms + bathrooms + sqft_living + 
-  sqft_lot + floors + view + condition + sqft_above)
-
-baseModel = lm(log.price~1)
+#######################
+#Xay dung mo hinh
 fullModel <- lm(log.price~., data = housePrice.prepro)
 
-BIC.both <- MASS::stepAIC(interModel, direction = "both",
-              scope = list(lower = baseModel, upper = fullModel), k = log(nrow(housePrice)))
-
-summary(BIC.both)
-vif(BIC.both)
-par(mfrow=c(2,2))
-plot(BIC.both)
-
-
-a <- lm(formula = log.price ~ date + bedrooms + bathrooms + sqft_living15 + 
-          sqft_lot + floors + view + condition + lat + grade + yr_built + 
-          waterfront + zipcode + long + yr_renovated)
-vif(lm(formula = log.price ~ date + bedrooms + bathrooms + sqft_living15 + 
-         sqft_lot + floors + view + condition + lat + grade + yr_built + 
-         waterfront + zipcode + long + yr_renovated))
-summary(a)
-plot(a)
-
-anova(a, BIC.both)
-
-#AIC both
-
-AIC.both <- MASS::stepAIC(interModel, direction = "both",
-                          scope = list(lower = baseModel, upper = fullModel), k = 2)
-
-summary(AIC.both)
-vif(AIC.both)
-par(mfrow=c(2,2))
-plot(AIC.both)
-
-
-a <- lm(formula = log.price ~ date + bedrooms + bathrooms + sqft_living + 
-          sqft_lot + floors + view + condition + sqft_above + lat + 
-          grade + yr_built + sqft_living15 + waterfront + zipcode + 
-          long + yr_renovated + sqft_lot15)
-vif(a)
-b <- lm(formula = log.price ~ date + bedrooms + bathrooms + 
-          sqft_lot + floors + view + condition + sqft_above + lat + 
-          grade + yr_built + sqft_living15 + waterfront + zipcode + 
-          long + yr_renovated + sqft_lot15)
-vif(b)
-summary(a)
-plot(a)
-
-anova(b, a)
-
-
-
-
-
-fullModel <- lm(log.price~., data = housePrice.prepro)
 summary(fullModel)
 
-
-housePrice.prepro[["sqft_basement"]] <- sqft_basement**0.01
-colnames(housePrice.prepro)[colnames(housePrice.prepro) == "sqft_basement"] <- "pow.sqft_basement"
-
-hist(housePrice.prepro$pow.sqft_basement)
-
-pairs(log.price~pow.sqft_basement)
-
-fullModel <- lm(log.price~., data = housePrice.prepro)
-summary(fullModel)
+#Danh gia mo hinh full
+par(mfrow=c(1,1))
+plot(fullModel$fitted.values,log.price,xlab="Fitted Values")
+abline(lsfit(fullModel$fitted.values,log.price), col = "red")
 
 par(mfrow=c(2,2))
 plot(fullModel)
 
 
-library(car)
-vif(fullModel)
+car::vif(lm(log.price ~ date + bedrooms + bathrooms + sqft_living + sqft_lot + 
+            floors + waterfront + view + condition + grade + sqft_above + 
+            yr_built + yr_renovated + zipcode + lat + long + 
+            sqft_living15 + sqft_lot15))
+
+
+#######################
+#Model selection: Both BIC
+
+fullModel <- lm(log.price~., data = housePrice.prepro)
+interModel <-lm(log.price ~ bedrooms + bathrooms + sqft_living + sqft_lot +
+                        grade  + condition + sqft_above + sqft_living15)
+
+BIC.both <- MASS::stepAIC(interModel, direction = "both",
+                          scope = list(lower = baseModel, upper = fullModel),
+                          k = log(nrow(housePrice)))
+
+summary(BIC.both)
+
+#Kiem tra mo hinh da chon duoc
+par(mfrow=c(1,1))
+plot(BIC.both$fitted.values,log.price,xlab="Fitted Values")
+abline(lsfit(BIC.both$fitted.values,log.price), col = "red")
+
+par(mfrow=c(2,2))
+plot(BIC.both)
+
+par(mfrow=c(1,1))
+hist(BIC.both$residuals)
+vif(BIC.both)
+
+
+
+
+
+
+
+
 
 baseModel = lm(log.price~1)
 BIC.Fwd <- step(baseModel,scope=list(upper=fullModel,lower=baseModel),direction="forward", k=log(nrow(housePrice)))
@@ -141,6 +103,17 @@ par(mfrow=c(2,2))
 plot(BIC.Fwd)
 
 vif(BIC.Fwd)
+
+
+
+housePrice.prepro[["sqft_basement"]] <- sqft_basement**0.01
+colnames(housePrice.prepro)[colnames(housePrice.prepro) == "sqft_basement"] <- "pow.sqft_basement"
+
+hist(housePrice.prepro$pow.sqft_basement)
+
+attach(housePrice.prepro)
+pairs(log.price~pow.sqft_basement)
+
 
 BIC.FwdH0 <- lm(log.price ~ grade + lat + yr_built + view + bathrooms + 
                         sqft_living15 + condition + waterfront + floors + date + 
@@ -212,10 +185,13 @@ attach(housePrice.prepro)
 baseModel = lm(log.price~1)
 BIC.Fwd <- step(baseModel,scope=list(upper=fullModel,lower=baseModel),direction="forward", k=log(nrow(housePrice)))
 summary(BIC.Fwd)
+
 par(mfrow=c(2,2))
 plot(BIC.Fwd)
 
 hist(resid(BIC.Fwd))
+
+vif(BIC.Fwd)
 
 
 BIC.Bwd <- step(fullModel,direction="backward", k=log(nrow(housePrice)))
