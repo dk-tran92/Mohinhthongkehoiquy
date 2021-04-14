@@ -29,6 +29,65 @@ housePrice.prepro[["price"]] <- log(price)
 colnames(housePrice.prepro)[colnames(housePrice.prepro) == "price"] <- "log.price"
 
 
+
+
+#BIC both
+interModel <-lm(log.price ~ date + bedrooms + bathrooms + sqft_living + 
+  sqft_lot + floors + view + condition + sqft_above)
+
+baseModel = lm(log.price~1)
+fullModel <- lm(log.price~., data = housePrice.prepro)
+
+BIC.both <- MASS::stepAIC(interModel, direction = "both",
+              scope = list(lower = baseModel, upper = fullModel), k = log(nrow(housePrice)))
+
+summary(BIC.both)
+vif(BIC.both)
+par(mfrow=c(2,2))
+plot(BIC.both)
+
+
+a <- lm(formula = log.price ~ date + bedrooms + bathrooms + sqft_living15 + 
+          sqft_lot + floors + view + condition + lat + grade + yr_built + 
+          waterfront + zipcode + long + yr_renovated)
+vif(lm(formula = log.price ~ date + bedrooms + bathrooms + sqft_living15 + 
+         sqft_lot + floors + view + condition + lat + grade + yr_built + 
+         waterfront + zipcode + long + yr_renovated))
+summary(a)
+plot(a)
+
+anova(a, BIC.both)
+
+#AIC both
+
+AIC.both <- MASS::stepAIC(interModel, direction = "both",
+                          scope = list(lower = baseModel, upper = fullModel), k = 2)
+
+summary(AIC.both)
+vif(AIC.both)
+par(mfrow=c(2,2))
+plot(AIC.both)
+
+
+a <- lm(formula = log.price ~ date + bedrooms + bathrooms + sqft_living + 
+          sqft_lot + floors + view + condition + sqft_above + lat + 
+          grade + yr_built + sqft_living15 + waterfront + zipcode + 
+          long + yr_renovated + sqft_lot15)
+vif(a)
+b <- lm(formula = log.price ~ date + bedrooms + bathrooms + 
+          sqft_lot + floors + view + condition + sqft_above + lat + 
+          grade + yr_built + sqft_living15 + waterfront + zipcode + 
+          long + yr_renovated + sqft_lot15)
+vif(b)
+summary(a)
+plot(a)
+
+anova(b, a)
+
+
+
+
+
 fullModel <- lm(log.price~., data = housePrice.prepro)
 summary(fullModel)
 
