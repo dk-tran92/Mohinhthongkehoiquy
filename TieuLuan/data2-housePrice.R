@@ -1,8 +1,6 @@
 #Tieu luan
 #Data2
-#install MASS and plm
-#install.packages("plm")
-install.packages("ggplot2")
+#https://bookdown.org/egarpor/PM-UC3M/lm-ii-diagnostics.html#lm-ii-diagnostics-1
 
 #VIF close to  
 #1 : absence of multicollinearity.
