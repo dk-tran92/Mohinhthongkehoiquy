@@ -29,7 +29,8 @@ housePrice.prepro[["price"]] <- log(price)
 colnames(housePrice.prepro)[colnames(housePrice.prepro) == "price"] <- "log.price"
 
 
-
+round(cor(housePrice.prepro), 2)
+corrplot::corrplot(cor(housePrice.prepro), addCoef.col = "grey")
 
 #BIC both
 interModel <-lm(log.price ~ date + bedrooms + bathrooms + sqft_living + 
