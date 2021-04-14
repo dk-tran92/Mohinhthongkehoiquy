@@ -2,11 +2,28 @@
 #Data2
 #https://bookdown.org/egarpor/PM-UC3M/lm-ii-diagnostics.html#lm-ii-diagnostics-1
 
+
+
+
 #VIF close to  
 #1 : absence of multicollinearity.
 #VIF larger than  5   or  10  : problematic amount of multicollinearity. Advised to remove the predictor with largest VIF.
 
+
+
+
+
 #*********DATA        http://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set
+https://www.kaggle.com/hellbuoy/car-price-prediction/tasks?taskId=1707
+
+
+https://www.kaggle.com/arujitdas/car-price-prediction
+
+
+
+
+
+
 
 setwd('K:/0-Caohoc/HP1/Thongke/Tieu-luan/data')
 housePrice <- read.csv('data2.csv', header = TRUE)
