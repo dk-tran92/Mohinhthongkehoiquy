@@ -4,6 +4,10 @@
 #install.packages("plm")
 install.packages("ggplot2")
 
+#VIF close to  
+#1 : absence of multicollinearity.
+#VIF larger than  5   or  10  : problematic amount of multicollinearity. Advised to remove the predictor with largest VIF.
+
 
 setwd('K:/0-Caohoc/HP1/Thongke/Tieu-luan/data')
 housePrice <- read.csv('data2.csv', header = TRUE)
