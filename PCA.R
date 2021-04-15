@@ -1,3 +1,12 @@
+
+https://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise
+
+
+
+
+
+
+
 #https://archive.ics.uci.edu/ml/datasets/Tennis+Major+Tournament+Match+Statistics
 
 setwd('E:/z_Study/CH/HP1/Thongke/Tieu-luan/Tennis-Major-Tournaments')
