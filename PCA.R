@@ -1,11 +1,11 @@
 
 https://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise
-
-
-
-
-
-
+https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring
+https://archive.ics.uci.edu/ml/datasets/Concrete+Slump+Test
+https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
+https://archive.ics.uci.edu/ml/datasets/Demand+Forecasting+for+a+store
+https://archive.ics.uci.edu/ml/datasets/Daily+Demand+Forecasting+Orders
+https://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set
 
 #https://archive.ics.uci.edu/ml/datasets/Tennis+Major+Tournament+Match+Statistics
 
