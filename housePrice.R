@@ -1,4 +1,5 @@
 #Tieu luan
+#http://103.216.120.135:1935/cliptv_vod_v2/_definst_/amlst:cmc/media2/0/0/0/291/149249.mp4:levels*14_13:orders*14_13/manifest.mpd
 #Data2
 
 setwd('E:/z_Study/CH/HP1/Thongke/Tieu-luan/data')
